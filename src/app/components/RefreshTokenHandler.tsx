@@ -23,10 +23,12 @@ export default function RefreshTokenHandler() {
                     console.log(hoursPassed);
                     if (hoursPassed <= -24) {
                         window.location.href = '/logout';
-                    } else {
+                    } else if (hoursPassed <= 0.083) {
+                        //リフレッシュ処理
                         //await fetch('/api/refresh');
                     }
                 } else {
+                    console.log("ログインしてないのでなんもないっす！");
                 }
             } catch (err) {
                 console.error('セッションチェック失敗:', err);

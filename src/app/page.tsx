@@ -6,8 +6,8 @@ import { sessionOptions } from "@/lib/session"; // ← 後述する設定ファ�
 
 
 export default function Home() {
-  
+
   return (
-    <div></div>
+    <div>大三元</div>
   );
 }
