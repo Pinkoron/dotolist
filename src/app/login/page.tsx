@@ -1,18 +1,24 @@
 'use client';
-
 import { useEffect } from 'react';
 
+const redirectToHostedUI = async () => {
+  const res = await fetch('/api/auth/start', { credentials: 'include' });
+  if (!res.ok) throw new Error('API error');
+  const data = await res.json();
+  return data.hostedUIUrl; // URL文字列を返す
+};
 export default function LoginPage() {
   useEffect(() => {
-    // Hosted UI にリダイレクト
+    const redirect = async () => {
+      try {
+        const url = await redirectToHostedUI();
+        window.location.href = url; // URL文字列でリダイレクト
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
-    const domain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
-    console.log(domain);
-    const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID; // CognitoのApp client ID
-    const redirectUri = 'http://localhost:3000/api/auth/login'; // トークン受け取り先
-
-    const hostedUIUrl = `https://${domain}/login?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
-    window.location.href = hostedUIUrl;
+    redirect();
   }, []);
 
   return <div>ログインにリダイレクト中...</div>;

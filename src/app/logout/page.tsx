@@ -7,7 +7,8 @@ export default function LoginOut() {
     // Hosted UI にリダイレクト
     const domain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
     const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID; // CognitoのApp client ID
-    const logoutUri = 'http://localhost:3000/api/auth/logout'; // トークン受け取り先
+    const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const logoutUri = `${baseApiUrl}/auth/logout`; // トークン受け取り先
 
     const hostedUIUrl = `https://${domain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
     window.location.href = hostedUIUrl;

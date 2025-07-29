@@ -3,14 +3,7 @@
 import { getIronSession } from "iron-session";
 import { sessionOptions } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
-
-type SessionData = {
-  user?: {
-    idToken: string;
-    accessToken: string;
-    refreshToken: string;
-  };
-};
+import { SessionData } from "@/lib/session";
 
 export async function GET(req: NextRequest) {
   const res = new NextResponse(null, { status: 302 });

@@ -2,28 +2,26 @@ import { getIronSession } from "iron-session";
 import { NextRequest, NextResponse } from "next/server";
 import { sessionOptions } from "@/lib/session";
 import jwt from "jsonwebtoken";
-
-type SessionData = {
-  user?: {
-    idToken: string;
-    email: string;
-    accessToken: string;
-    expUnix: Date;
-  };
-};
+import { SessionData } from "@/lib/session";
 
 export const saveSessionAndRedirect = async (
   req: NextRequest,
-  id_token: string,
   access_token: string,
+  user_id: string,
   email: string,
+  expires_in: number,
   redirectUrl: string
 ): Promise<NextResponse> => {
   //アクセストークンの有効期限を取得
-  const decoded = jwt.decode(access_token) as { exp?: number; iat?: number };
-  const expUnix = decoded.exp!; // 有効期限（秒単位のUNIX時間）
-  const expiresAt = new Date(expUnix * 1000); // → Dateオブジェクトに変換
-
+  let expiresAt: Date;
+  const decoded = jwt.decode(access_token);
+  if (decoded && typeof decoded === "object" && "exp" in decoded) {
+    const expUnix = decoded.exp as number;
+    expiresAt = new Date(expUnix * 1000);
+  } else {
+    // fallback to expires_in
+    expiresAt = new Date(Date.now() + expires_in * 1000);
+  }
   //リダイレクトのひな形を作る
   const res = new NextResponse(null, { status: 302 });
   //リダイレクト内ヘッダーを決める
@@ -33,8 +31,8 @@ export const saveSessionAndRedirect = async (
   const session = await getIronSession<SessionData>(req, res, sessionOptions);
   //キャッシュに保存する内容をセット
   session.user = {
-    idToken: id_token,
     accessToken: access_token,
+    userId: user_id,
     email: email,
     expUnix: expiresAt,
   };

@@ -1,42 +1,19 @@
 'use client';
-
-import { usePathname } from 'next/navigation';
+import { checkSession } from '@/lib/apiClient';
 import { useEffect } from 'react';
 
-export default function RefreshTokenHandler() {
-    const pathname = usePathname();
-
+function useSessionCheck(intervalMinutes = 10) {
     useEffect(() => {
-        const checkSession = async () => {
-            alert("チェックします");
-            try {
-                const res = await fetch('/api/auth/token-expiry', {
-                    credentials: 'include',
-                });
-                if (res.ok) {
-                    alert("ログインしてました");
-                    const expUnix = new Date(await res.json());
-                    const now = new Date();
+        const intervalId = setInterval(() => {
+            // ここにcheckSession関数を呼ぶ処理
+            checkSession();
+        }, intervalMinutes * 60 * 1000);
 
-                    const hoursPassed = (expUnix.getTime() - now.getTime()) / (1000 * 60 * 60);
-                    alert(hoursPassed);
-                    console.log(hoursPassed);
-                    if (hoursPassed <= -24) {
-                        window.location.href = '/logout';
-                    } else if (hoursPassed <= 0.083) {
-                        //リフレッシュ処理
-                        //await fetch('/api/refresh');
-                    }
-                } else {
-                    console.log("ログインしてないのでなんもないっす！");
-                }
-            } catch (err) {
-                console.error('セッションチェック失敗:', err);
-            }
-        }
+        return () => clearInterval(intervalId); // クリーンアップ
+    }, [intervalMinutes]);
+}
 
-        checkSession();
-    }, [pathname]);
-
+export default function RefreshTokenHandler() {
+    useSessionCheck(50); // 5分毎にチェック
     return null;
 }

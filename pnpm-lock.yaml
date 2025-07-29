@@ -14,6 +14,9 @@ importers:
       '@aws-sdk/lib-dynamodb':
         specifier: ^3.844.0
         version: 3.844.0(@aws-sdk/client-dynamodb@3.844.0)
+      '@aws-sdk/util-dynamodb':
+        specifier: ^3.848.0
+        version: 3.848.0(@aws-sdk/client-dynamodb@3.844.0)
       amazon-cognito-identity-js:
         specifier: ^6.3.15
         version: 6.3.15
@@ -190,6 +193,12 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@aws-sdk/client-dynamodb': ^3.844.0
+
+  '@aws-sdk/util-dynamodb@3.848.0':
+    resolution: {integrity: sha512-sitaCOtYLFF6L6+cpAxBho/Zr246Qdr78yIvBznqpEvqmBE1UYEH8SQ1NRvmw79p9XKmhHELKWO7mCQk+20sFQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@aws-sdk/client-dynamodb': ^3.848.0
 
   '@aws-sdk/util-endpoints@3.844.0':
     resolution: {integrity: sha512-1DHh0WTUmxlysz3EereHKtKoxVUG9UC5BsfAw6Bm4/6qDlJiqtY3oa2vebkYN23yltKdfsCK65cwnBRU59mWVg==}
@@ -2703,6 +2712,11 @@ snapshots:
       tslib: 2.8.1
 
   '@aws-sdk/util-dynamodb@3.844.0(@aws-sdk/client-dynamodb@3.844.0)':
+    dependencies:
+      '@aws-sdk/client-dynamodb': 3.844.0
+      tslib: 2.8.1
+
+  '@aws-sdk/util-dynamodb@3.848.0(@aws-sdk/client-dynamodb@3.844.0)':
     dependencies:
       '@aws-sdk/client-dynamodb': 3.844.0
       tslib: 2.8.1

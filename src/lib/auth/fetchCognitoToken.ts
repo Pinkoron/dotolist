@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 
 type AuthInfo =
-  | { id_token: string; access_token: string; refresh_token: string }
+  | {
+      id_token: string;
+      access_token: string;
+      refresh_token: string;
+      expires_in: number;
+    }
   | NextResponse;
 
 export const fetchCognitoTokens = async (
@@ -33,7 +38,7 @@ export const fetchCognitoTokens = async (
 
   //jsonから使える形式に変換
   const tokenJson = await tokenRes.json();
-  const { id_token, access_token, refresh_token } = tokenJson;
+  const { id_token, access_token, refresh_token, expires_in } = tokenJson;
 
-  return { id_token, access_token, refresh_token };
+  return { id_token, access_token, refresh_token, expires_in };
 };

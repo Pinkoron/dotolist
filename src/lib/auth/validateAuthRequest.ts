@@ -8,7 +8,8 @@ export const validateAuthRequest = (
   req: NextRequest,
   clientId: string,
   domain: string,
-  redirectUri: string
+  redirectUri: string,
+  expectedState?: string
 ): AuthInfo => {
   //[エラー検出]引数に問題がないか確認
   if (!req || !clientId || !domain || !redirectUri) {
@@ -19,17 +20,15 @@ export const validateAuthRequest = (
   //コードを取得
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state"); // ←ここで分岐
+  const state = url.searchParams.get("state");
 
-  //[エラー検出]コードがなかったらエラー
   if (!code) {
     return new NextResponse("Code not found", { status: 400 });
   }
 
-  return {
-    code,
-    clientId,
-    domain,
-    redirectUri,
-  };
+  if (expectedState && state !== expectedState) {
+    return new NextResponse("Invalid state parameter", { status: 403 });
+  }
+
+  return { code, clientId, domain, redirectUri };
 };
