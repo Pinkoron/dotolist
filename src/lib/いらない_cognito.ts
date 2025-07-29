@@ -58,7 +58,7 @@ export async function login(
       onFailure: (err) => reject(err),
 
       // ✅ 仮パスワードの場合に新しいパスワードとして再送信
-      newPasswordRequired: (userAttributes, requiredAttributes) => {
+      newPasswordRequired: () => {
         user.completeNewPasswordChallenge(
           password,
           {},

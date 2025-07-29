@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 
 export default function TodoPage() {
-    const [todos, setTodos] = useState<any[]>([]);
+    const [todos, setTodos] = useState<unknown[]>([]);
 
     useEffect(() => {
         fetch('/api/todo')

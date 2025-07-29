@@ -1,8 +1,6 @@
 'use client';
 import { callApi } from "@/lib/apiClient";
-import { decodeIdToken } from "@/lib/auth/decodeIdToken";
 import { SessionData } from "@/lib/session";
-import { getLayoutOrPageModule } from "next/dist/server/lib/app-dir-module";
 import { useEffect, useState } from "react";
 
 type Todo = {
@@ -14,7 +12,6 @@ type Todo = {
 
 export default function DashboardClient({ user }: SessionData) {
     const [value, setValue] = useState("");
-    const [error, setError] = useState("エラーが発生しました");
     const [incompleteTodos, setIncompleteTodos] = useState<Todo[]>([]);
     const [completeTodos, setCompleteTodos] = useState<Todo[]>([]);
 
@@ -25,11 +22,8 @@ export default function DashboardClient({ user }: SessionData) {
 
     //追加ボタン
     const handleAddTodo = async () => {
-        console.log("追加ボタンが押されました！");
-        console.log("入力値:", value);
 
         if (value.trim() === "") {
-            console.log("空の入力は追加できません");
             return;
         }
 
@@ -42,7 +36,7 @@ export default function DashboardClient({ user }: SessionData) {
         };
 
         //dynamoDBに追加
-        const res = await callApi("/api/todo/add-todo", {
+        await callApi("/api/todo/add-todo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -59,7 +53,7 @@ export default function DashboardClient({ user }: SessionData) {
 
         const todo = isComplete ? completeTodos[indexTomove] : incompleteTodos[indexTomove]
         //callApiでdynamoDBのisCompleteを反転する
-        const res = await callApi("/api/todo/toggle-complete", {
+        await callApi("/api/todo/toggle-complete", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -89,7 +83,7 @@ export default function DashboardClient({ user }: SessionData) {
     const handleDeleteTodo = async (indexTomove: number, isComplete: boolean) => {
         const todo = isComplete ? completeTodos[indexTomove] : incompleteTodos[indexTomove]
         //callApiでdynamoDBのisCompleteを反転する
-        const res = await callApi("/api/todo/delete-todo", {
+        await callApi("/api/todo/delete-todo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -111,23 +105,17 @@ export default function DashboardClient({ user }: SessionData) {
 
     const fetchTodos = async () => {
         try {
-            console.log("api実行");
             const data = await callApi("/api/todo/get-todos", {
                 method: "GET",
                 credentials: "include", // セッションクッキーを送信
             });
-            console.log("APIレスポンス:", data);
-            console.log(data.incompleteTodos);
-            console.log(data.completeTodos)
             setIncompleteTodos(data.incompleteTodos || []);
             setCompleteTodos(data.completeTodos || []);
         } catch (error) {
             console.error("データの取得に失敗しました", error);
-            setError("タスクの取得に失敗しました");
         }
     };
 
-    console.log("************************");
     useEffect(() => {
         fetchTodos();
     }, []);

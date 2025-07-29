@@ -1,6 +1,6 @@
 // app/api/todo/add-todo/route.ts
 import { NextResponse } from "next/server";
-import { PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import client from "@/lib/dynamodb";
 import { getIronSession } from "iron-session";
 import { sessionOptions, SessionData } from "@/lib/session";

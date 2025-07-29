@@ -14,7 +14,10 @@ export async function GET() {
       cookieStore,
       sessionOptions
     );
-    const userId = session.user?.userId!;
+    const userId = session.user?.userId;
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     //console.log(`ユーザーIDは:${userId}`);
     const getCmd = new QueryCommand({
@@ -49,8 +52,7 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
-    console.log("エラーだよ！");
-    //console.error("エラーが発生しました:", error);
+    console.error("エラーが発生しました:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
