@@ -1,7 +1,6 @@
 'use client';
-import { callApi } from "@/lib/apiClient";
 import { SessionData } from "@/lib/session";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Todo = {
     userId: string;
