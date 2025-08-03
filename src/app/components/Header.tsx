@@ -29,7 +29,7 @@ export default function Header() {
   return (
     <header className="p-4 bg-gray-100">
       <div className="max-w-2xl flex justify-between items-center mx-auto">
-        <h1 className="text-xl font-bold">TODOアプリ</h1>
+        <Link href="/" className="text-xl font-bold hover:text-blue-600 transition">TODOアプリ</Link>
 
         <div>{isLoggedIn ?
           <Link href="/logout" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">

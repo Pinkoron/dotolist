@@ -1,8 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ToDo アプリ with Next.js & AWS Cognito
+
+## 目的
+
+Next.js でログイン機能付きの実践的な ToDo アプリを開発することで、以下のスキル向上を目指しました。
+
+- 認証（Auth）機能の実装経験を積む
+- AWS API（Cognito / DynamoDB）への理解を深める
+- Next.js を用いたサービス開発の流れを把握する
+
+## 構成技術
+
+- **フレームワーク**: Next.js
+- **認証**: AWS Cognito、Google 認証
+- **データベース**: AWS DynamoDB
+- **フロントエンドホスティング**: Vercel
+
+## 開発環境
+
+- **エディタ**: Visual Studio Code、Claude Code
+- **バージョン管理**: GitHub
+- **デプロイ**: Vercel
+
+## 成果まとめ
+
+- ユーザーごとに ToDo を管理できるアプリが完成
+- 認証、DB 連携、デプロイまで一通り自力で構築
+- 実務に近い形で開発工程を体験できた
 
 ## Getting Started
 
-First, run the development server:
+開発サーバーを起動:
 
 ```bash
 npm run dev
@@ -14,23 +41,10 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ブラウザで [https://dotolist-wine.vercel.app/](https://dotolist-wine.vercel.app/) にアクセスしてアプリを確認できます。
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+このアプリは Vercel Platform を使用してデプロイされています。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js のデプロイについて詳しくは [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) をご覧ください。
